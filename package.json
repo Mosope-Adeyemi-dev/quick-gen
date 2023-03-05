@@ -1,14 +1,27 @@
 {
-  "name": "multi-boilerplate",
+  "name": "quickgen-cli",
   "version": "0.0.1",
-  "description": "A boilerplate generator for multiple JavaScript framweworks",
-  "main": "multi-boiler.js",
+  "description": "A boilerplate generator for multiple frameworks, mainly JavaScript frameworks",
+  "main": "index.js",
   "scripts": {
     "test": "npm run test"
   },
   "author": "mosope.dev",
   "license": "ISC",
   "dependencies": {
-    "commander": "^10.0.0"
+    "chalk": "^4.0.0",
+    "commander": "^10.0.0",
+    "cross-spawn": "^7.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.14.0",
+    "eslint-config-node": "^4.1.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.6.2"
+  },
+  "bin": {
+    "quickgen": "./bin/index.js"
   }
 }
