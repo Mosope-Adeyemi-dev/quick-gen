@@ -1,0 +1,14 @@
+{
+  "name": "multi-boilerplate",
+  "version": "0.0.1",
+  "description": "A boilerplate generator for multiple JavaScript framweworks",
+  "main": "multi-boiler.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "author": "mosope.dev",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^10.0.0"
+  }
+}
