@@ -1,6 +1,7 @@
 const { program } = require("commander");
 const pkg = require("./package.json");
 const defaultSetup = require("./src/commands/setups/default.setup");
+const importSetup = require("./src/commands/setups/import.setup");
 
 program
   .name("quickgen-cli")
@@ -41,7 +42,9 @@ program
   .description(
     "Setup a new project by importing an exiting boilerplate from github."
   )
-  .action(async (project_name, options) => {});
+  .action(async (project_name, options) => {
+    await importSetup(project_name, options);
+  });
 
 program.parse(process.argv);
 
