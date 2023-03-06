@@ -2,14 +2,7 @@ const { mkdirSync, rmdirSync, existsSync } = require("fs");
 const { join } = require("path");
 const { homedir } = require("os");
 const { spawn } = require("cross-spawn");
-const chalk = require("chalk");
-
-const log = console.log;
-const error = chalk.bold.red;
-const warning = chalk.hex("#FFA500");
-const info = chalk.bold.blue;
-const success = chalk.bold.green;
-const processCompleted = chalk.bgGreen.bold.black;
+const logger = require("../../utils/log");
 
 const defaultSetup = async (project_name, options) => {
   const { parent_directory, framework } = options;
@@ -18,14 +11,14 @@ const defaultSetup = async (project_name, options) => {
 
   //Check if project already exists in directory
   if (existsSync(projectPath)) {
-    log(warning(`⛔ Warning: Project already exists at: '${projectPath}'.`));
+    logger("warn", `⛔ Warning: Project already exists at: '${projectPath}'.`);
     process.exit(1);
   }
 
   switch (framework) {
     case "node/express":
       {
-        log(info("💠 Info: Starting setup"));
+        logger("info", "💠 Info: Starting setup");
 
         // create project folder
         mkdirSync(projectPath);
@@ -42,8 +35,7 @@ const defaultSetup = async (project_name, options) => {
 
         if (npmInit.status != 0) {
           rmdirSync(projectPath, { cwd: parent_directory });
-
-          log(error("Error: Failed to initialize project with npm"));
+          logger("error", "Error: Failed to initialize project with npm");
           process.exit(1);
         }
 
@@ -51,17 +43,16 @@ const defaultSetup = async (project_name, options) => {
         spawn.sync("code", ["."], { cwd: projectPath });
 
         // Outputs
-        log(processCompleted("✅ Process completed!"));
-        log(
-          success(
-            `Project '${project_name}' created in '${parent_directory}' with ${framework} framework`
-          )
+        logger("processCompleted", "✅ Process completed!");
+        logger(
+          "success",
+          `Project '${project_name}' created in '${parent_directory}' with ${framework} framework`
         );
       }
       break;
     case "nuxtJS":
       {
-        log(info("💠 Info: Starting setup"));
+        logger("info", "💠 Info: Starting setup");
 
         //run setup commands
         const nuxtInit = spawn.sync("npx", ["nuxi", "init", project_name], {
@@ -71,7 +62,7 @@ const defaultSetup = async (project_name, options) => {
 
         // Handle if child process fails
         if (nuxtInit.status != 0) {
-          log(error("Failed to initialize nuxtJS project."));
+          logger("error", "Failed to initialize nuxtJS project.");
           process.exit(1);
         }
 
@@ -79,17 +70,16 @@ const defaultSetup = async (project_name, options) => {
         spawn.sync("code", ["."], { cwd: projectPath });
 
         //Outputs
-        log(processCompleted("✅ Process completed!"));
-        log(
-          success(
-            `Project '${project_name}' created in '${parent_directory}' with ${framework} framework`
-          )
+        logger("complete", "✅ Process completed!");
+        logger(
+          "success",
+          `Project '${project_name}' created in '${parent_directory}' with ${framework} framework`
         );
       }
       break;
     default:
       {
-        console.error(`Invalid framework specified: ${framework}`);
+        logger("error", `Invalid framework specified: ${framework}`);
       }
       break;
   }
