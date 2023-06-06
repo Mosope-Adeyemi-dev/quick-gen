@@ -7,7 +7,7 @@ QuickGen is an npm package designed to simplify the process of generating boiler
 To install QuickGen, open your terminal and run the following command:
 
 ```
-npm install -g quickgen
+npm i -g quickgen-cli
 ```
 
 ## Usage
